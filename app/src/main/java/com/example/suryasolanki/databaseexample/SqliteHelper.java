@@ -55,7 +55,6 @@ public class SqliteHelper extends SQLiteOpenHelper {
         SQLiteDatabase sqLiteDatabase= this.getReadableDatabase();
         Cursor cursor=sqLiteDatabase.rawQuery("Select * from"+Constants.TABLE_CONTACTS+";",null);
         cursor.moveToFirst();
-
         while(cursor.isAfterLast()==false){
             arrayList.add(cursor.getString(cursor.getColumnIndex(Constants.CON_NAME)));
             cursor.moveToNext();
