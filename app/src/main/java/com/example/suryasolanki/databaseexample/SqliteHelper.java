@@ -17,8 +17,6 @@ import java.util.ArrayList;
 
 public class SqliteHelper extends SQLiteOpenHelper {
 
-
-
     public SqliteHelper(Context context){
         super(context,Constants.DB_NAME,null,Constants.DB_VERSION);
     };
