@@ -23,10 +23,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.main_actvity);
         sqliteHelper=new SqliteHelper(this);
 
-        sqliteHelper.InsertPerson("Surya","8952979627","Suryapratap.in@gmail.com","Pune","KP");
+       // sqliteHelper.InsertPerson("Surya","8952979627","Suryapratap.in@gmail.com","Pune","KP");
       //  sqliteHelper.onCreate();
 
-       ArrayList<Person> arrayList=sqliteHelper.getAllContacts();
+        Person per=new Person("Ravi","89529796","ravisar43@gmail.com","Frankfurt","Lewis");
+     //   sqliteHelper.insertNewContacts(per);
+
+        ArrayList<Person> arrayList=sqliteHelper.getAllContacts();
 
         for(Person p:arrayList){
             Toast.makeText(this,"Person Name: "+p.getName()+"Phone "+p.getPhone_num()+"email "+p.getEmail() +"City "+p.getCity()
