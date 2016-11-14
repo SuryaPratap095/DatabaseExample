@@ -22,16 +22,16 @@ public class SqliteHelper extends SQLiteOpenHelper {
     };
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-       String Contacts_table_create="Create table "+Constants.TABLE_CONTACTS +"("+Constants.CON_CONTACTS_ID+"INTEGER PRIMARY KEY, "
-               + Constants.CON_NAME + "TEXT, "+ Constants.CON_EMAIL + "TEXT, " + Constants.CON_CITY+"TEXT, "+ Constants.CON_STREET
-               +"TEXT, "+Constants.CON_PHONE+"FLOAT"+");";
+       String Contacts_table_create="Create table "+Constants.TABLE_CONTACTS +"("+Constants.CON_CONTACTS_ID+" INTEGER PRIMARY KEY AUTOINCREMENT, "
+               + Constants.CON_NAME + " TEXT, "+ Constants.CON_EMAIL + " TEXT, " + Constants.CON_CITY+" TEXT, "+ Constants.CON_STREET
+               +" TEXT, "+Constants.CON_PHONE+" FLOAT"+");";
 
         sqLiteDatabase.execSQL(Contacts_table_create);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-        sqLiteDatabase.execSQL("Drop table if exists"+Constants.TABLE_CONTACTS);
+        sqLiteDatabase.execSQL("Drop table if exists "+Constants.TABLE_CONTACTS);
         onCreate(sqLiteDatabase);
 
     }
@@ -39,24 +39,35 @@ public class SqliteHelper extends SQLiteOpenHelper {
     public void InsertPerson(String name,String phone_num, String email,String city, String street ){
         SQLiteDatabase sqLiteDatabase=this.getWritableDatabase();
         ContentValues contentValues=new ContentValues();
+     //   contentValues.put("id",11);
         contentValues.put("name",name);
-        contentValues.put("phone_num",phone_num);
+        contentValues.put("phone_num",895297978);
+      //  contentValues.put("phone_num",8952979627);
         contentValues.put("email",email);
         contentValues.put("City",city);
         contentValues.put("street",street);
         sqLiteDatabase.insert(Constants.TABLE_CONTACTS,null,contentValues);
     }
 
-    public ArrayList<String> getAllContacts(){
-        ArrayList<String> arrayList=new ArrayList<String>();
 
+
+    public ArrayList<Person> getAllContacts(){
+        ArrayList<Person> arrayList=new ArrayList<Person>();
+
+        Person person=new Person();
         SQLiteDatabase sqLiteDatabase= this.getReadableDatabase();
-        Cursor cursor=sqLiteDatabase.rawQuery("Select * from"+Constants.TABLE_CONTACTS+";",null);
-        cursor.moveToFirst();
-        while(cursor.isAfterLast()==false){
-            arrayList.add(cursor.getString(cursor.getColumnIndex(Constants.CON_NAME)));
-            cursor.moveToNext();
+        Cursor cursor=sqLiteDatabase.rawQuery("Select * from "+Constants.TABLE_CONTACTS+";",null);
+        if(cursor.moveToFirst()){
+            do{
+                person.setName(cursor.getString(cursor.getColumnIndex(Constants.CON_NAME)));
+                person.setPhone_num(cursor.getString(cursor.getColumnIndex(Constants.CON_PHONE)));
+                person.setEmail(cursor.getString(cursor.getColumnIndex(Constants.CON_EMAIL)));
+                person.setCity(cursor.getString(cursor.getColumnIndex(Constants.CON_CITY)));
+                person.setStreet(cursor.getString(cursor.getColumnIndex(Constants.CON_STREET)));
+                arrayList.add(person);
+            }while(cursor.moveToNext());
         }
+
         return arrayList;
     }
 }
